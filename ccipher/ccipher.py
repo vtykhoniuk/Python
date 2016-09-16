@@ -14,8 +14,7 @@ def encode_str(s, shift):
     if not isinstance(s, str):
         raise ValueError()
 
-    for c in s:
-        yield encode_char(c, shift)
+    return "".join([encode_char(c, shift) for c in s])
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
