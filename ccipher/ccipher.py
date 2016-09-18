@@ -24,4 +24,4 @@ if __name__ == "__main__":
     shift = int(sys.argv[1])
     for line in sys.stdin:
         line = line.rstrip()
-        print("".join(encode_str(line, shift)))
+        print(encode_str(line, shift))
