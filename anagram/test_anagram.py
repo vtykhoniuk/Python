@@ -1,6 +1,7 @@
 import unittest
 from anagram import isanagram
 
+
 class TestAnagram(unittest.TestCase):
 
     def test_isanagram_trows_value_error_exception(self):
