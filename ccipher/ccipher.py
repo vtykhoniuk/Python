@@ -1,14 +1,16 @@
 import sys
 
+
 def encode_char(c, shift):
     if len(c) != 1:
         raise ValueError()
 
     if c.isalpha():
         start = ord('A' if c.isupper() else 'a')
-        return chr(start + (ord(c) - start + shift)%26)
+        return chr(start + (ord(c) - start + shift) % 26)
     else:
         return c
+
 
 def encode_str(s, shift):
     if not isinstance(s, str):
