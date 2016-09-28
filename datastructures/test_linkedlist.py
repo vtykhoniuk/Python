@@ -33,6 +33,11 @@ class TestLinkedList(unittest.TestCase):
         self.assertIsNone(self.linkedlist._tail)
         self.assertEqual(0, self.linkedlist.size)
 
+    def test_constructore_from_list(self):
+        l = LinkedList(from_list=[1, 2, 3])
+        self.assertEqual(3, l.size)
+        self.assertEqual(1, l.head())
+
     def test_push_front_empty_list(self):
         self.linkedlist.push_front(1)
         self.assertIsNotNone(self.linkedlist._head)
@@ -99,17 +104,28 @@ class TestLinkedList(unittest.TestCase):
         self.linkedlist.push_front(1)
         self.assertTrue(self.linkedlist)
 
-    def test_front_raises_exception(self):
+    def test_head_raises_exception(self):
         with self.assertRaises(IndexError):
             self.linkedlist.head()
 
-    def test_front(self):
+    def test_head(self):
         for x in range(3):
             self.linkedlist.push_front(x)
 
         for x in reversed(range(3)):
             self.assertEqual(x, self.linkedlist.head())
             self.linkedlist.pop_front()
+
+    def test_tail_raises_exception(self):
+        with self.assertRaises(IndexError):
+            self.linkedlist.tail()
+
+    def test_tail(self):
+        for x in range(3):
+            self.linkedlist.push_back(x)
+
+        self.assertEqual(2, self.linkedlist.tail())
+        self.assertEqual(3, self.linkedlist.size)
 
     @unittest.skip("till double-linked list is emplemented")
     def test_pop_back_from_empty_list_raises_exception(self):

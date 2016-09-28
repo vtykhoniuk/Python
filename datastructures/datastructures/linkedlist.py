@@ -24,10 +24,14 @@ class LinkedList:
         def next_node(self, value):
             self._next_node = value
 
-    def __init__(self):
+    def __init__(self, from_list=[]):
         self._head = None
         self._tail = None
         self._size = 0
+
+        if from_list:
+            for x in from_list:
+                self.push_back(x)
 
     def __len__(self):
         return self.size
@@ -87,3 +91,12 @@ class LinkedList:
             raise IndexError()
 
         return self._head.value
+
+    def tail(self):
+        """Returns element from the tail of the list.
+        Index error hasa been raised if list is empty"""
+
+        if not self._size:
+            raise IndexError()
+
+        return self._tail.value

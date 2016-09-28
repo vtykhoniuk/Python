@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='datastructures',
-      version='0.1',
+      version='0.101',
       description='Popular computer science datastructures',
       url='https://github.com/vtykhoniuk/Python/tree/master/datastructures',
       author='Volodymyr Tykhoniuk',
