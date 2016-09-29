@@ -1,11 +1,11 @@
 import unittest
-from datastructures import Stack
+from datastructures import LinkedStack
 
 
 class TestStack(unittest.TestCase):
 
     def setUp(self):
-        self.stack = Stack()
+        self.stack = LinkedStack()
 
     def test_pop_raises_exception(self):
         with self.assertRaises(IndexError):

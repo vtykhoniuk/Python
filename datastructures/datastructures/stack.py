@@ -1,7 +1,7 @@
 from .linkedlist import LinkedList
 
 
-class Stack(LinkedList):
+class LinkedStack(LinkedList):
     """FIFO queue representation"""
 
     def push(self, value):
