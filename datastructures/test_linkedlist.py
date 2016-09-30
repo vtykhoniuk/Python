@@ -2,152 +2,128 @@ import unittest
 from datastructures import LinkedList
 
 
-class TestLinkedListNode(unittest.TestCase):
+class TestConstructor(unittest.TestCase):
 
-    def test_default_constructor(self):
-        n = LinkedList.Node()
-        self.assertIsNone(n.value)
-        self.assertIsNone(n.next_node)
+    def test_default(self):
+        l = LinkedList()
+        self.assertIsNone(l._head)
+        self.assertIsNone(l._tail)
+        self.assertEqual(0, l.size)
 
-    def test_constructor(self):
-        n = LinkedList.Node("123")
-        self.assertIsNone(n.next_node)
-        self.assertEqual("123", n.value)
-
-        m = LinkedList.Node("456", n)
-        self.assertEqual("456", m.value)
-        self.assertEqual(n, m.next_node)
-
-    def test_next_node_setter(self):
-        n = LinkedList.Node("123")
-        n.next_node = LinkedList.Node("456")
-
-
-class TestLinkedList(unittest.TestCase):
-
-    def setUp(self):
-        self.linkedlist = LinkedList()
-
-    def test_default_constructor(self):
-        self.assertIsNone(self.linkedlist._head)
-        self.assertIsNone(self.linkedlist._tail)
-        self.assertEqual(0, self.linkedlist.size)
-
-    def test_constructore_from_list(self):
+    def test_list(self):
         l = LinkedList(from_list=[1, 2, 3])
         self.assertEqual(3, l.size)
         self.assertEqual(1, l.head())
 
-    def test_push_front_empty_list(self):
-        self.linkedlist.push_front(1)
-        self.assertIsNotNone(self.linkedlist._head)
-        self.assertIsNotNone(self.linkedlist._tail)
-        self.assertEqual(self.linkedlist._head, self.linkedlist._tail)
-        self.assertEqual(1, self.linkedlist.size)
 
-    def test_push_front_non_empty_list(self):
-        self.linkedlist.push_front(1)
-        self.linkedlist.push_front(2)
-        self.assertEqual(2, self.linkedlist._head.value)
-        self.assertEqual(1, self.linkedlist._tail.value)
-        self.assertEqual(2, self.linkedlist.size)
+class TestPush(unittest.TestCase):
 
-    def test_push_back_empty_list(self):
-        self.linkedlist.push_back(1)
-        self.assertIsNotNone(self.linkedlist._head)
-        self.assertIsNotNone(self.linkedlist._tail)
-        self.assertEqual(self.linkedlist._head, self.linkedlist._tail)
-        self.assertEqual(1, self.linkedlist.size)
+    def setUp(self):
+        self.l = LinkedList()
 
-    def test_push_back_non_empty_list(self):
-        self.linkedlist.push_back(1)
-        self.linkedlist.push_back(2)
-        self.assertEqual(1, self.linkedlist._head.value)
-        self.assertEqual(2, self.linkedlist._tail.value)
-        self.assertEqual(2, self.linkedlist.size)
+    def test_front_empty(self):
+        self.l.push_front(1)
+        self.assertIsNotNone(self.l._head)
+        self.assertIsNotNone(self.l._tail)
+        self.assertEqual(self.l._head, self.l._tail)
+        self.assertEqual(1, self.l.size)
 
-    def test_pop_front_on_empty_list_raises_exception(self):
+    def test_front_non_empty(self):
+        self.l.push_front(1)
+        self.l.push_front(2)
+        self.assertEqual(2, self.l._head.value)
+        self.assertEqual(1, self.l._tail.value)
+        self.assertEqual(2, self.l.size)
+
+    def test_back_empty(self):
+        self.l.push_back(1)
+        self.assertIsNotNone(self.l._head)
+        self.assertIsNotNone(self.l._tail)
+        self.assertEqual(self.l._head, self.l._tail)
+        self.assertEqual(1, self.l.size)
+
+    def test_back_non_empty(self):
+        self.l.push_back(1)
+        self.l.push_back(2)
+        self.assertEqual(1, self.l._head.value)
+        self.assertEqual(2, self.l._tail.value)
+        self.assertEqual(2, self.l.size)
+
+
+class TestPop(unittest.TestCase):
+
+    def setUp(self):
+        self.l = LinkedList()
+
+    def test_front_empty_raises_exception(self):
         with self.assertRaises(IndexError):
-            self.linkedlist.pop_front()
+            self.l.pop_front()
 
-    def test_pop_front_from_one_element_list(self):
-        self.linkedlist.push_back(1)
-        self.assertEqual(1, self.linkedlist.pop_front())
-        self.assertIsNone(self.linkedlist._head)
-        self.assertIsNone(self.linkedlist._tail)
-        self.assertEqual(0, self.linkedlist.size)
+    def test_front_from_one_element_list(self):
+        self.l.push_back(1)
+        self.assertEqual(1, self.l.pop_front())
+        self.assertIsNone(self.l._head)
+        self.assertIsNone(self.l._tail)
+        self.assertEqual(0, self.l.size)
 
-    def test_pop_front_from_two_elements_list(self):
-        self.linkedlist.push_back(1)
-        self.linkedlist.push_back(2)
-        self.linkedlist.pop_front()
-        self.assertIsNotNone(self.linkedlist._head)
-        self.assertIsNotNone(self.linkedlist._tail)
-        self.assertEqual(self.linkedlist._head, self.linkedlist._tail)
+    def test_front_from_two_elements_list(self):
+        self.l.push_back(1)
+        self.l.push_back(2)
+        self.l.pop_front()
+        self.assertIsNotNone(self.l._head)
+        self.assertIsNotNone(self.l._tail)
+        self.assertEqual(self.l._head, self.l._tail)
 
-    def test_pop_front_from_multielements_list(self):
+    def test_front_from_multielements_list(self):
         for x in range(10):
-            self.linkedlist.push_back(x)
+            self.l.push_back(x)
 
-        self.linkedlist.pop_front()
-        self.assertEqual(1, self.linkedlist._head.value)
-        self.assertEqual(9, self.linkedlist._tail.value)
+        self.l.pop_front()
+        self.assertEqual(1, self.l._head.value)
+        self.assertEqual(9, self.l._tail.value)
 
-    def test_builtin_len_works_correctly(self):
-        self.assertEqual(0, len(self.linkedlist))
+
+class TestSizedProtocol(unittest.TestCase):
+
+    def setUp(self):
+        self.l = LinkedList()
+
+    def test_len(self):
+        self.assertEqual(0, len(self.l))
         for x in range(10):
-            self.linkedlist.push_front(x)
-        self.assertEqual(10, len(self.linkedlist))
+            self.l.push_front(x)
+        self.assertEqual(10, len(self.l))
 
-    def test_linkedlist_in_conditional_statements(self):
-        self.assertFalse(self.linkedlist)
-        self.linkedlist.push_front(1)
-        self.assertTrue(self.linkedlist)
+    def test_bool(self):
+        self.assertFalse(self.l)
+        self.l.push_front(1)
+        self.assertTrue(self.l)
+
+
+class TestHeadTail(unittest.TestCase):
+
+    def setUp(self):
+        self.l = LinkedList()
 
     def test_head_raises_exception(self):
         with self.assertRaises(IndexError):
-            self.linkedlist.head()
+            self.l.head()
 
     def test_head(self):
         for x in range(3):
-            self.linkedlist.push_front(x)
+            self.l.push_front(x)
 
         for x in reversed(range(3)):
-            self.assertEqual(x, self.linkedlist.head())
-            self.linkedlist.pop_front()
+            self.assertEqual(x, self.l.head())
+            self.l.pop_front()
 
     def test_tail_raises_exception(self):
         with self.assertRaises(IndexError):
-            self.linkedlist.tail()
+            self.l.tail()
 
     def test_tail(self):
         for x in range(3):
-            self.linkedlist.push_back(x)
+            self.l.push_back(x)
 
-        self.assertEqual(2, self.linkedlist.tail())
-        self.assertEqual(3, self.linkedlist.size)
-
-    @unittest.skip("till double-linked list is emplemented")
-    def test_pop_back_from_empty_list_raises_exception(self):
-        with self.assertRaises(IndexError):
-            self.linkedlist.pop_back()
-
-    @unittest.skip("till double-linked list is emplemented")
-    def test_pop_back_from_one_element_list(self):
-        self.linkedlist.push_back(1)
-        self.assertEqual(1, self.linkedlist.pop_back())
-        self.assertIsNone(self.linkedlist._head)
-        self.assertIsNone(self.linkedlist._tail)
-        self.assertEqual(0, self.linkedlist.size)
-
-    @unittest.skip("till double-linked list is emplemented")
-    def test_pop_back_from_two_element_list(self):
-        self.linkedlist.push_back(1)
-        self.linkedlist.push_back(2)
-        self.assertEqual(2, self.linkedlist.pop_back())
-        self.assertIsNotNone(self.linkedlist._head)
-        self.assertIsNotNone(self.linkedlist._tail)
-        self.assertEqual(self.linkedlist._head, self.linkedlist._tail)
-
-    def tearDown(self):
-        self.linkedlist = None
+        self.assertEqual(2, self.l.tail())
+        self.assertEqual(3, self.l.size)
