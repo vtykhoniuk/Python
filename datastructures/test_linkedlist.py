@@ -155,3 +155,38 @@ class TestIterationProtocol(unittest.TestCase):
             self.l.push_back(x)
 
         self.assertListEqual(list(range(n)), list(self.l))
+
+
+class TestLinkedListCircle(unittest.TestCase):
+
+    def setUp(self):
+        self.l = LinkedList()
+
+    def test_empty(self):
+        self.assertFalse(LinkedList.has_circle(self.l))
+
+    def test_1(self):
+        self.l.push_back(1)
+        self.assertFalse(LinkedList.has_circle(self.l))
+
+    def test_2(self):
+        for x in range(10):
+            self.l.push_back(x)
+        self.assertFalse(LinkedList.has_circle(self.l))
+
+    def test_3(self):
+        self.l.push_back(1)
+        self.l.push_back(2)
+        self.l._tail.next_node = self.l._head
+        self.assertTrue(LinkedList.has_circle(self.l))
+
+    def test_4(self):
+        self.l.push_back(1)
+        self.l.push_back(2)
+        self.l.push_back(3)
+        n = self.l._tail
+        self.l.push_back(4)
+        self.l.push_back(5)
+        self.l.push_back(6)
+        self.l._tail.next_node = n
+        self.assertTrue(LinkedList.has_circle(self.l))

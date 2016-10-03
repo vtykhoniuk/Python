@@ -43,6 +43,10 @@ class LinkedList:
             else:
                 raise StopIteration()
 
+        @property
+        def current(self):
+            return self._current
+
     def __init__(self, from_list=[]):
         self._head = None
         self._tail = None
@@ -122,3 +126,28 @@ class LinkedList:
             raise IndexError()
 
         return self._tail.value
+
+    @staticmethod
+    def has_circle(l):
+        """Checks whether linked list has a circle
+        """
+
+        if not l:
+            return False
+
+        slow = iter(l)
+        next(slow)
+
+        fast = iter(l)
+        next(fast)
+
+        try:
+            while True:
+                next(slow)
+                next(fast)
+                next(fast)
+                if slow.current == fast.current:
+                    return True
+
+        except StopIteration:
+            return False
