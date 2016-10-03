@@ -1,8 +1,8 @@
-from datastructures import Stack
+from datastructures import LinkedStack
 
 
 def balpar(s):
-    l = Stack()
+    l = LinkedStack()
 
     d = {'[': ']', '(': ')', '{': '}'}
 

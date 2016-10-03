@@ -1,4 +1,4 @@
-from datastructures import Stack
+from datastructures import LinkedStack
 
 
 # Sort stack, using another stack
@@ -9,7 +9,7 @@ def stack_sort_1(s):
     if not s:
         return r
 
-    aux = Stack()
+    aux = LinkedStack()
 
     while s:
         tmp = s.pop()
