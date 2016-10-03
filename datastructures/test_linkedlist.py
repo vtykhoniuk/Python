@@ -190,3 +190,36 @@ class TestLinkedListCircle(unittest.TestCase):
         self.l.push_back(6)
         self.l._tail.next_node = n
         self.assertTrue(LinkedList.has_circle(self.l))
+
+
+class TestReverse(unittest.TestCase):
+
+    def setUp(self):
+        self.l = LinkedList()
+
+    def test_empty(self):
+        self.l.reverse()
+        self.assertIsNone(self.l._head)
+        self.assertIsNone(self.l._tail)
+
+    def test_1(self):
+        self.l.push_back(1)
+        self.l.reverse()
+        self.assertEqual(self.l._head, self.l._tail)
+
+    def test_2(self):
+        self.l.push_back(1)
+        self.l.push_back(2)
+        self.l.reverse()
+        self.assertEqual(2, self.l.head())
+        self.assertEqual(1, self.l.tail())
+
+    def test_3(self):
+        n = 10
+        for x in range(n):
+            self.l.push_back(x)
+
+        l1 = list(self.l)
+        self.l.reverse()
+        l2 = list(self.l)
+        self.assertListEqual(l1, l2[::-1])

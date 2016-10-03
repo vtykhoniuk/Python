@@ -92,7 +92,7 @@ class LinkedList:
         self._size += 1
 
     def pop_front(self):
-        """Removes element from the top of the stack"""
+        """Removes element from the head of the list"""
 
         if not self._size:
             raise IndexError()
@@ -101,7 +101,6 @@ class LinkedList:
 
         self._size -= 1
 
-        # If it was last element of the list
         if self._size:
             self._head = self._head.next_node
         else:
@@ -111,7 +110,7 @@ class LinkedList:
 
     def head(self):
         """Returns element from the head of the list.
-        Index error hasa been raised if list is empty"""
+        Index error has been raised if list is empty"""
 
         if not self._size:
             raise IndexError()
@@ -120,12 +119,37 @@ class LinkedList:
 
     def tail(self):
         """Returns element from the tail of the list.
-        Index error hasa been raised if list is empty"""
+        Index error has been raised if list is empty"""
 
         if not self._size:
             raise IndexError()
 
         return self._tail.value
+
+    def reverse(self):
+        """Reverse linked list
+
+        Warning: This method will reverse the internal order of linked list
+        nodes. The complexity is: O(n) time and O(1) space
+        """
+
+        if self._size <= 1:
+            return
+
+        prev = None
+        node = self._head
+        self._tail = node
+
+        while True:
+            tmp = node.next_node
+            node.next_node = prev
+            prev = node
+            node = tmp
+
+            if not node:
+                break
+
+        self._head = prev
 
     @staticmethod
     def has_circle(l):
