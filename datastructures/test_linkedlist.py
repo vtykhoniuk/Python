@@ -127,3 +127,31 @@ class TestHeadTail(unittest.TestCase):
 
         self.assertEqual(2, self.l.tail())
         self.assertEqual(3, self.l.size)
+
+
+class TestIterationProtocol(unittest.TestCase):
+
+    def setUp(self):
+        self.l = LinkedList()
+
+    def test_iterator(self):
+        self.l.push_back(1)
+        i = iter(self.l)
+        self.assertEqual(1, next(i))
+        with self.assertRaises(StopIteration):
+            next(i)
+
+    def test_for_loop(self):
+        n = 10
+        for x in range(n):
+            self.l.push_back(x)
+
+        for x, y in enumerate(self.l, 0):
+            self.assertEqual(x, y)
+
+    def test_generator(self):
+        n = 10
+        for x in range(n):
+            self.l.push_back(x)
+
+        self.assertListEqual(list(range(n)), list(self.l))

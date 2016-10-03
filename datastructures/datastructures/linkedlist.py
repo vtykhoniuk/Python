@@ -24,6 +24,25 @@ class LinkedList:
         def next_node(self, value):
             self._next_node = value
 
+    class LinkedListIterator:
+        """Linked list iterator
+
+        Iterates through the linked list in current -> next order"""
+
+        def __init__(self, l):
+            self._current = l._head
+
+        def __iter__(self):
+            return self
+
+        def __next__(self):
+            if self._current:
+                value = self._current.value
+                self._current = self._current.next_node
+                return value
+            else:
+                raise StopIteration()
+
     def __init__(self, from_list=[]):
         self._head = None
         self._tail = None
@@ -35,6 +54,9 @@ class LinkedList:
 
     def __len__(self):
         return self.size
+
+    def __iter__(self):
+        return LinkedList.LinkedListIterator(self)
 
     @property
     def size(self):
