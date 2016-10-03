@@ -24,7 +24,7 @@ class LinkedList:
         def next_node(self, value):
             self._next_node = value
 
-    class LinkedListIterator:
+    class Iterator:
         """Linked list iterator
 
         Iterates through the linked list in current -> next order"""
@@ -56,7 +56,7 @@ class LinkedList:
         return self.size
 
     def __iter__(self):
-        return LinkedList.LinkedListIterator(self)
+        return LinkedList.Iterator(self)
 
     @property
     def size(self):
