@@ -55,3 +55,32 @@ class TestQueueOperations(unittest.TestCase):
         self.q.enqueue(2)
         self.assertEqual(1, self.q.peek())
         self.assertEqual(2, len(self.q))
+
+
+class TestQueue(unittest.TestCase):
+    def setUp(self):
+        self.q = LinkedQueue()
+
+    @staticmethod
+    def _fill_the_queue(q, filename):
+        with open(filename) as f:
+            result = f.readline().rstrip()
+            for instruction in map(lambda s: s.rstrip(), f):
+                if instruction == 'd':
+                    q.dequeue()
+                else:
+                    q.enqueue(instruction)
+
+        return result
+
+    def test_queue1(self):
+        result = TestQueue._fill_the_queue(self.q, "./queue_test1.txt")
+        self.assertEqual(result, "".join(self.q))
+
+    def test_queue2(self):
+        result = TestQueue._fill_the_queue(self.q, "./queue_test2.txt")
+        self.assertEqual(result, "".join(self.q))
+
+    def test_queue3(self):
+        with self.assertRaises(IndexError):
+            result = TestQueue._fill_the_queue(self.q, "./queue_test3.txt")
