@@ -179,6 +179,7 @@ class TestLinkedListCircle(unittest.TestCase):
         self.l.push_back(2)
         self.l._tail.next_node = self.l._head
         self.assertTrue(LinkedList.has_circle(self.l))
+        self.assertEqual(1, LinkedList.detect_circle(self.l).value)
 
     def test_4(self):
         self.l.push_back(1)
@@ -190,6 +191,7 @@ class TestLinkedListCircle(unittest.TestCase):
         self.l.push_back(6)
         self.l._tail.next_node = n
         self.assertTrue(LinkedList.has_circle(self.l))
+        self.assertEqual(3, LinkedList.detect_circle(self.l).value)
 
 
 class TestReverse(unittest.TestCase):

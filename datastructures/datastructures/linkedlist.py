@@ -152,12 +152,13 @@ class LinkedList:
         self._head = prev
 
     @staticmethod
-    def has_circle(l):
-        """Checks whether linked list has a circle
+    def detect_circle(l):
+        """Detects whether the linked list has a circle and returns pointer
+        to the LinkedList.Node a circle stats with
         """
 
         if not l:
-            return False
+            return
 
         slow = iter(l)
         next(slow)
@@ -171,7 +172,29 @@ class LinkedList:
                 next(fast)
                 next(fast)
                 if slow.current == fast.current:
-                    return True
+                    k = 1
+                    next(slow)
+                    while slow.current != fast.current:
+                        k += 1
+                        next(slow)
+
+                    fast = iter(l)
+                    for _ in range(k):
+                        next(fast)
+
+                    slow = iter(l)
+                    while slow.current != fast.current:
+                        next(slow)
+                        next(fast)
+
+                    return slow.current
 
         except StopIteration:
-            return False
+            return
+
+    @staticmethod
+    def has_circle(l):
+        """Checks whether linked list has a circle
+        """
+
+        return LinkedList.detect_circle(l) is not None
