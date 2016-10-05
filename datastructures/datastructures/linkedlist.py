@@ -152,6 +152,22 @@ class LinkedList:
         self._head = prev
 
     @staticmethod
+    def nth_to_last(l, n):
+        if n >= l.size:
+            raise IndexError("n is greater thatn list size")
+
+        slow = iter(l)
+        fast = iter(l)
+
+        for _ in range(n+1):
+            next(fast)
+
+        for _ in fast:
+            next(slow)
+
+        return slow.current.value
+
+    @staticmethod
     def detect_circle(l):
         """Detects whether the linked list has a circle and returns pointer
         to the LinkedList.Node a circle stats with

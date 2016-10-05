@@ -225,3 +225,28 @@ class TestReverse(unittest.TestCase):
         self.l.reverse()
         l2 = list(self.l)
         self.assertListEqual(l1, l2[::-1])
+
+
+class TestNthToLast(unittest.TestCase):
+
+    def setUp(self):
+        self.l = LinkedList()
+        n = 10
+        for x in range(n):
+            self.l.push_back(x)
+
+    def test_on_empty(self):
+        with self.assertRaises(IndexError):
+            LinkedList.nth_to_last(LinkedList(), 5)
+
+        with self.assertRaises(IndexError):
+            LinkedList.nth_to_last(LinkedList(), 0)
+
+    def test_last(self):
+        self.assertEqual(9, LinkedList.nth_to_last(self.l, 0))
+
+    def test_median(self):
+        self.assertEqual(4, LinkedList.nth_to_last(self.l, self.l.size//2))
+
+    def test_first(self):
+        self.assertEqual(0, LinkedList.nth_to_last(self.l, self.l.size-1))
